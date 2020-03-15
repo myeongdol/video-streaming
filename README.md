@@ -1,3 +1,3 @@
 # video-streaming
 
-## trello : https://trello.com/b/GEEHwMOX/toy-project-01
++ https://trello.com/b/GEEHwMOX/toy-project-01
