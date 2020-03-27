@@ -1,33 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>회원가입</title>
-    </head>
-    <body>
-        <form action="/mem/join" method="post">
-            <table>
-                <tr>
-                    <td>아이디</td>
-                    <td><input type="text" name="memId"></td>
-                </tr>
-                <tr>
-                    <td>비밀번호</td>
-                    <td><input type="text" name="memPw"></td>
-                </tr>
-                <tr>
-                    <td>이름</td>
-                    <td><input type="text" name="memName"></td>
-                </tr>
-                <tr>
-                    <td>이메일</td>
-                    <td><input type="text" name="memEmail"></td>
-                </tr>
-            </table>
+<%@ include file = "top.jsp" %>
 
-            <input type="submit" value="가입하기">
-        </form>
-    </body>
-</html>
+<div class="container">
+
+    <form action="/mem/join" method="POST">
+
+        <div class="input-group" style="width:80%;padding-top:1em;margin:auto;">
+            <input type="text" class="form-control" name="memId" placeholder="아이디를 입력하세요.">
+        </div>
+        <div class="input-group" style="width:80%;padding-top:1em;margin:auto;">
+            <input type="password" class="form-control" name="memPw" placeholder="비밀번호를 입력하세요.">
+        </div>
+        <div class="input-group" style="width:80%;padding-top:1em;margin:auto;">
+            <input type="text" class="form-control" name="memName" placeholder="이름을 입력하세요.">
+        </div>
+        <div class="input-group" style="width:80%;padding-top:1em;margin:auto;">
+            <input type="text" class="form-control" name="memEmail" placeholder="이메일을 입력하세요.">
+        </div>
+
+        <div style="width:10em;padding-top:2em;margin:auto;">
+            <button type="submit" class="btn btn-outline-primary btn-lg">가입하기</button>
+        </div>
+
+    </form>
+
+</div>
+
+<%@ include file = "bottom.jsp" %>

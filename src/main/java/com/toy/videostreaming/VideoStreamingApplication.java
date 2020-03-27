@@ -15,7 +15,7 @@ public class VideoStreamingApplication {
 		SpringApplication.run(VideoStreamingApplication.class, args);
 	}
 
-	@GetMapping("/")
+	@GetMapping("/test")
 	public String index(@RequestParam(value = "name", defaultValue = "World") String name) {
 		return String.format("Hello %s", name);
 	}
