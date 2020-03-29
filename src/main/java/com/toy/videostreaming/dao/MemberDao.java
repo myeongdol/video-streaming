@@ -25,14 +25,13 @@ public class MemberDao {
     public Member getOneById(String id, String pw) {
         return template.queryForObject(
                 "select * from member where id=? and password=?",
-                new Object[]{id,pw},
+                new Object[]{id, pw},
                 new RowMapper<Member>() {
                     public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
                         Member mem = new Member();
                         mem.setMemId(rs.getString("id"));
                         mem.setMemName(rs.getString("name"));
                         mem.setMemEmail(rs.getString("email"));
-                        mem.setMemPermit(rs.getString("permit"));
                         return mem;
                     }
                 });

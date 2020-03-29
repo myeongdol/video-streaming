@@ -4,16 +4,18 @@
 <%@ include file = "top.jsp" %>
 
 <div class="container">
-    <div class="input-group input-group-lg" style="width:60%;padding-top:2em;margin:auto;">
-        <input type="text" class="form-control" name="memId" placeholder="아이디">
-    </div>
-    <div class="input-group input-group-lg" style="width:60%;padding-top:2em;margin:auto;">
-        <input type="password" class="form-control" name="memPw" placeholder="비밀번호">
-    </div>
+    <form action="/action/login" method="POST">
+        <div class="input-group input-group-lg" style="width:60%;padding-top:2em;margin:auto;">
+            <input type="text" class="form-control" name="memId" placeholder="아이디">
+        </div>
+        <div class="input-group input-group-lg" style="width:60%;padding-top:2em;margin:auto;">
+            <input type="password" class="form-control" name="memPw" placeholder="비밀번호">
+        </div>
 
-    <div style="width:10em;padding-top:2em;margin:auto;">
-        <button type="button" class="btn btn-outline-primary btn-lg" onclick="location.href='/action/login'">로그인</button>
-    </div>
+        <div style="width:10em;padding-top:2em;margin:auto;">
+            <button type="submit" class="btn btn-outline-primary btn-lg">로그인</button>
+        </div>
+    </form>
 </div>
 
 <%@ include file = "bottom.jsp" %>
