@@ -13,19 +13,10 @@ public class MemberService {
     private MemberDao dao;
 
     public int addMember(Member member) {
-        int rs = dao.insert(member);
-        return rs;
+        return dao.insert(member);
     }
 
     public Member getMemberInfo(String id, String pw) {
-        Member memberInfo = dao.getOneById(id,pw);
-
-        if(memberInfo == null) {
-            System.out.print("로그인 실패");
-            return null;
-        }
-        System.out.print("로그인 성공");
-
-        return memberInfo;
+        return dao.getOneById(id,pw);
     }
 }

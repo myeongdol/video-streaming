@@ -3,8 +3,11 @@ package com.toy.videostreaming.controller;
 import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.service.MemberService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +16,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class MemberController {
+
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired
     private MemberService memberService;
@@ -30,18 +35,22 @@ public class MemberController {
             return "redirect:/login";
         }
         Member memberInfo = memberService.getMemberInfo(id, pw);
+        if(memberInfo == null) {
+            logger.debug("로그인 실패");
+            return "redirect:/";
+        }
+        logger.debug("로그인 성공");
 
         session.setAttribute("memInfo", memberInfo);
-
         return "redirect:/";
     }
 
-    @RequestMapping("/join")
+    @GetMapping("/join")
     public String joinFrom() {
         return "join";
     }
 
-    @RequestMapping("/mem/join")
+    @PostMapping("/mem/join")
     public String joinAction(Member member) {
         int result = memberService.addMember(member);
 
