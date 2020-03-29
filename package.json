@@ -1,0 +1,31 @@
+{
+  "name": "video-streaming",
+  "version": "1.0.0",
+  "description": "+ https://trello.com/b/GEEHwMOX/toy-project-01",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myeongdol/video-streaming.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/myeongdol/video-streaming/issues"
+  },
+  "homepage": "https://github.com/myeongdol/video-streaming#readme"
+}
