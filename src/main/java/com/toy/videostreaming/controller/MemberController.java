@@ -45,6 +45,12 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @GetMapping("/join")
     public String joinFrom() {
         return "join";
