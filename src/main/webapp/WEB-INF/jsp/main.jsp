@@ -5,8 +5,14 @@
 
 <div class="container">
     <div style="float:right;padding-right:2em;">
+    <c:if test='${sessionScope.memInfo.memId eq null}' >
     <button type="button" class="btn btn-secondary" onclick="location.href='/login'">로그인</button>
     <button type="button" class="btn btn-primary" onclick="location.href='/join'">회원가입</button>
+    </c:if>
+    <c:if test='${sessionScope.memInfo.memId ne null}' >
+    <u> ${sessionScope.memInfo.memName} </u>님 반갑습니다.
+    <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'">로그아웃</button>
+    </c:if>
     </div>
 
     <section class="grid-wrap">
