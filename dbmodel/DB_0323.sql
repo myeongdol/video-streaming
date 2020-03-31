@@ -40,6 +40,8 @@ ENGINE=InnoDB
 --동영상
 CREATE TABLE `video` (
 	`no` INT(10,0) NOT NULL AUTO_INCREMENT,
+	`origin_file_name` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
+	`extension` VARCHAR(20) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`file_path` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`file_name` VARCHAR(200) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`file_url` VARCHAR(300) NULL DEFAULT NULL COLLATE 'utf8mb4_0900_ai_ci',
@@ -50,5 +52,7 @@ COMMENT='동영상 데이터'
 COLLATE='utf8mb4_0900_ai_ci'
 ENGINE=InnoDB
 ;
+
+
 
 

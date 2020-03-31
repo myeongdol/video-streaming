@@ -12,6 +12,7 @@
     <c:if test='${sessionScope.memInfo.memId ne null}' >
     <u> ${sessionScope.memInfo.memName} </u>님 반갑습니다.
     <button type="button" class="btn btn-outline-secondary" onclick="location.href='/logout'">로그아웃</button>
+    <button type="button" class="btn btn-outline-success" onclick="location.href='/board/write'">글쓰기</button>
     </c:if>
     </div>
 
