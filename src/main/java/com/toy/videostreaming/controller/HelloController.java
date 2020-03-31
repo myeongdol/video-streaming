@@ -15,4 +15,9 @@ public class HelloController {
     public String hello() {
         return "hello";
     }
+
+    @RequestMapping("/webpack")
+    public String webpackTest() {
+        return "webpack";
+    }
 }
