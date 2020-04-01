@@ -20,5 +20,5 @@ document.body.appendChild(component());
 
 window.onload = function() {
   var buttonText = $('button').text();
-  alert(buttonText);
+  console.log(buttonText);
 }
