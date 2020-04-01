@@ -7,4 +7,6 @@
     <span>Hello Webpack!</span>
 </div>
 
+<script src="resources/dist/webpack-test.bundle.js"></script>
+
 <%@ include file = "bottom.jsp" %>
