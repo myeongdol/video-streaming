@@ -4,14 +4,12 @@ import com.toy.videostreaming.domain.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 
 @Repository
@@ -39,5 +37,21 @@ public class VideoDao {
 
         //video의 no값 리턴
         return keyHolder.getKey().intValue();
+    }
+
+    public Video selectOneByNo(int no) {
+        return jdbcTemplate.queryForObject(
+                "SELECT * FROM video WHERE NO=?",
+                new Object[]{no},
+                new RowMapper<Video>() {
+                    @Override
+                    public Video mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Video video = new Video();
+                        video.setFileName(rs.getString("file_name"));
+                        video.setFilePath(rs.getString("file_path"));
+                        video.setExtension(rs.getString("extension"));
+                        return video;
+                    }
+                });
     }
 }
