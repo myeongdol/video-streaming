@@ -27,10 +27,14 @@
 		var client = docElem['clientHeight'],
 			inner = window['innerHeight'];
 
+    // Todo: error -> 현재 clientHeight값을 제대로 가져오지 못함
+		/*
 		if( client < inner )
 			return inner;
 		else
 			return client;
+	  */
+	  return inner;
 	}
 
 	function scrollY() {

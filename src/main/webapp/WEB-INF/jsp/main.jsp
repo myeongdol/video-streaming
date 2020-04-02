@@ -60,6 +60,7 @@
 <script src="resources/js/modernizr.js"></script>
 <script src="resources/js/isotope.pkgd.min.js"></script>
 <script src="resources/js/imagesloaded.pkgd.min.js"></script>
+<script src="resources/js/colorfinder-1.1.js"></script>
 <script src="resources/js/main.js"></script>
 
 <%@ include file = "bottom.jsp" %>
