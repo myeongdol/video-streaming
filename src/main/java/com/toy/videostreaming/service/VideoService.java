@@ -14,4 +14,5 @@ public class VideoService {
     public int add(Video video) {
         return videoDao.insert(video);
     }
+    public Video getOne(int no) { return videoDao.selectOneByNo(no); }
 }

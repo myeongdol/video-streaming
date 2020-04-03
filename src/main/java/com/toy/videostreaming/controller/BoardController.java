@@ -7,17 +7,24 @@ import com.toy.videostreaming.service.BoardService;
 import com.toy.videostreaming.service.VideoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class BoardController {
@@ -30,6 +37,32 @@ public class BoardController {
 
     // 파일 업로드 경로 설정
     private static final String SAVE_PATH = "C:\\Users\\Suhee\\Documents\\GitHub\\video-streaming\\upload\\";
+
+    @RequestMapping("/list")
+    public String index(Model model) {
+        List<Board> boardList = boardService.listAll();
+        model.addAttribute("boardList",boardList);
+        return "list";
+    }
+
+    @RequestMapping("/attach/{vno}")
+    public String readFile(@PathVariable int vno, HttpServletResponse response) throws IOException {
+        if(vno==0) { return null; }
+
+        // 첨부파일 정보
+        Video video = videoService.getOne(vno);
+
+        response.setContentType( "image/gif" );
+        ServletOutputStream bout = response.getOutputStream();
+        String attachFile = SAVE_PATH + video.getFilePath() + "/" + video.getFileName();
+
+        FileInputStream file = new FileInputStream(attachFile);
+        int length;
+        byte[] buffer = new byte[10];
+        while ( ( length = file.read( buffer ) ) != -1 )
+            bout.write( buffer, 0, length );
+        return null;
+    }
 
     @RequestMapping("/board/write")
     public String boardWrite() {
