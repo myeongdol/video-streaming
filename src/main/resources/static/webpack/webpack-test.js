@@ -21,4 +21,5 @@ document.body.appendChild(component());
 window.onload = function() {
   var buttonText = $('button').text();
   console.log(buttonText);
+  console.log(2);
 }
