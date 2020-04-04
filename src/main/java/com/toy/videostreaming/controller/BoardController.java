@@ -5,19 +5,20 @@ import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.domain.Video;
 import com.toy.videostreaming.service.BoardService;
 import com.toy.videostreaming.service.VideoService;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -40,19 +41,27 @@ public class BoardController {
     @Autowired
     VideoService videoService;
 
-    // 파일 업로드 경로 설정
-    private static final String SAVE_PATH = "C:\\Users\\Suhee\\Documents\\GitHub\\video-streaming\\upload\\";
+    @Autowired
+    private Environment env;
 
-    @RequestMapping("/list")
+    // 파일 업로드 경로 설정
+    private static String SAVE_PATH;
+
+    @PostConstruct
+    public void init() {
+        SAVE_PATH = env.getProperty("video.save-path");
+    }
+
+    @GetMapping("/list")
     public String index(Model model) {
         List<Board> boardList = boardService.listAll();
         model.addAttribute("boardList",boardList);
         return "list";
     }
 
-    @RequestMapping("/attach/{vno}")
+    @GetMapping("/attach/{vno}")
     public String readFile(@PathVariable int vno, HttpServletResponse response) throws IOException {
-        if(vno==0) { return null; }
+        if ( vno <= 0 ) { return null; }
 
         // 썸네일 가져오기
         Video video = videoService.getOne(vno);
@@ -69,12 +78,12 @@ public class BoardController {
         return null;
     }
 
-    @RequestMapping("/board/write")
+    @GetMapping("/board/write")
     public String boardWrite() {
         return "board_w";
     }
 
-    @RequestMapping("/board/add")
+    @PostMapping("/board/add")
     public ModelAndView boardAdd(Board board,
                                  @RequestParam(name = "filename") MultipartFile uploadFile,
                                  HttpSession session) {
@@ -84,20 +93,23 @@ public class BoardController {
         Member memInfo = (Member) session.getAttribute("memInfo");
 
         // 첨부파일 업로드
-        int videoNo = uploadVideo(uploadFile, memInfo.getMemId());
+        Video video = getVideoInfo(uploadFile, new Video());
+        if (video == null) {
+            view.addObject("responseMessage","게시글 등록 실패입니다.");
+        }
+        int videoNo = videoService.add(video);
 
-        if(videoNo<1) {
+        if (videoNo < 1) {
             view.addObject("responseMessage","첨부파일 업로드 실패입니다.");
             view.setViewName("board_w");
             return view;
         }
 
-        int rs = boardService.add(board,videoNo,memInfo.getMemId());
+        int rs = boardService.add(board, videoNo, memInfo.getMemId());
 
-        if(rs<1) {
+        if (rs < 1) {
             view.addObject("responseMessage","게시글 등록 실패입니다.");
-        }
-        else {
+        } else {
             view.addObject("responseMessage","게시글 등록 성공입니다.");
         }
 
@@ -107,12 +119,9 @@ public class BoardController {
     }
 
     // 첨부파일 처리
-    public int uploadVideo(MultipartFile file, String memId) {
-
-        SimpleDateFormat ymd = new SimpleDateFormat("yyyyMMdd");
-        SimpleDateFormat hms = new SimpleDateFormat("HHmmss");
-        String newFilePath = (String) ymd.format(new Date());
-        String newFileName = (String) hms.format(new Date()) + "_" + memId;
+    public Video getVideoInfo(MultipartFile file, Video video) {
+        String newFilePath = DateFormatUtils.format(new Date(), "yyyyMMdd");
+        String newFileName = DateFormatUtils.format(new Date(), "HHmmss");
 
         String originFile = file.getOriginalFilename();
         String originFileName = originFile.split("\\.")[0];
@@ -120,27 +129,23 @@ public class BoardController {
 
         try {
             // 동영상 저장
-            if(!saveFile(file, makeDir("video",newFilePath), newFileName)) {
-                return 0;
+            if (!saveFile(file, makeDir("video",newFilePath), newFileName)) {
+                return null;
             }
 
             // 썸네일 저장
-            if(!saveThumbnail(file, makeDir("img",newFilePath), newFileName)) {
-                return 0;
+            if (!saveThumbnail(file, makeDir("img",newFilePath), newFileName)) {
+                return null;
             }
-        }
-        catch (IOException | JCodecException e) {
+        } catch (IOException | JCodecException e) {
             throw new RuntimeException(e);
         }
-
-        // DB 등록
-        Video video = new Video();
 
         video.setOriginFileName(originFileName);
         video.setExtension(extension);
         video.setFilePath(newFilePath);
         video.setFileName(newFileName);
-        return videoService.add(video);
+        return video;
     }
 
     // 파일 저장경로
