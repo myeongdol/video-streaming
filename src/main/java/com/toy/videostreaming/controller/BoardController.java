@@ -5,6 +5,7 @@ import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.domain.Video;
 import com.toy.videostreaming.service.BoardService;
 import com.toy.videostreaming.service.VideoService;
+import com.toy.videostreaming.support.MemberLogics;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
@@ -90,7 +91,7 @@ public class BoardController {
 
         ModelAndView view = new ModelAndView();
 
-        Member memInfo = (Member) session.getAttribute("memInfo");
+        Member memInfo = MemberLogics.getMemberInfo(session);
 
         // 첨부파일 업로드
         Video video = getVideoInfo(uploadFile, new Video());

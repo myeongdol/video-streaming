@@ -2,6 +2,7 @@ package com.toy.videostreaming.controller;
 
 import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.service.MemberService;
+import com.toy.videostreaming.support.MemberLogics;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,13 +42,13 @@ public class MemberController {
         }
         logger.debug("로그인 성공");
 
-        session.setAttribute("memInfo", memberInfo);
+        MemberLogics.setMemberInfo(session, memberInfo);
         return "redirect:/";
     }
 
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate();
+        MemberLogics.removeMemberInfo(session);
         return "redirect:/";
     }
 
