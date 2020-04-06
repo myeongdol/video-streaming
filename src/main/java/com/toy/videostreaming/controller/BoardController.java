@@ -15,9 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
@@ -29,7 +33,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -53,11 +56,11 @@ public class BoardController {
         SAVE_PATH = env.getProperty("video.save-path");
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public String index(Model model) {
         List<Board> boardList = boardService.listAll();
         model.addAttribute("boardList",boardList);
-        return "list";
+        return "index";
     }
 
     @GetMapping("/attach/{vno}")
@@ -80,8 +83,20 @@ public class BoardController {
     }
 
     @GetMapping("/board/write")
-    public String boardWrite() {
-        return "board_w";
+    public ModelAndView boardWrite(HttpSession session) {
+        ModelAndView view = new ModelAndView();
+
+        Member memInfo = MemberLogics.getMemberInfo(session);
+
+        if(memInfo == null) {
+            view.addObject("responseMessage","로그인 후 이용하시기 바랍니다.");
+            view.setViewName("/login");
+        }
+        else {
+            view.setViewName("/board_w");
+        }
+
+        return view;
     }
 
     @PostMapping("/board/add")
@@ -114,7 +129,7 @@ public class BoardController {
             view.addObject("responseMessage","게시글 등록 성공입니다.");
         }
 
-        view.setViewName("main");
+        view.setViewName("index");
 
         return view;
     }
@@ -177,7 +192,7 @@ public class BoardController {
             throws IOException, JCodecException {
 
         // 파일 변환
-        File srcFile = new File(saveFilePath.replace("img","video")+"/"+source.getOriginalFilename());
+        File srcFile = new File(saveFilePath.replace("img","video")+"/"+saveFileName);
         source.transferTo(srcFile);
 
         File thumbnail = new File(saveFilePath+"/"+saveFileName);
@@ -188,9 +203,6 @@ public class BoardController {
         ImageIO.write(bufferedImage, "png", thumbnail);
 
         if(thumbnail.exists() && thumbnail.length()>1) {
-            // 임시 생성 파일 삭제
-            srcFile.delete();
-
             return true;
         }
 
