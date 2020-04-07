@@ -3,9 +3,9 @@
 
 <%@ include file = "top.jsp" %>
 
-<link rel="stylesheet" type="text/css" href="/resources/css/test/normalize.css" />
-<link rel="stylesheet" type="text/css" href="/resources/css/test/component.css" />
-<script src="/resources/js/test/modernizr.custom.js"></script>
+<link rel="stylesheet" type="text/css" href="/resources/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="/resources/css/component.css" />
+<script src="/resources/js/modernizr.custom.js"></script>
 
 <div class="container">
   <!-- Top Navigation -->
@@ -45,11 +45,11 @@
   </section>
 </div>
 
-<script src="/resources/js/test/masonry.pkgd.min.js"></script>
-<script src="/resources/js/test/imagesloaded.pkgd.min.js"></script>
-<script src="/resources/js/test/classie.js"></script>
-<script src="/resources/js/test/colorfinder-1.1.js"></script>
-<script src="/resources/js/test/gridScrollFx.js"></script>
+<script src="/resources/js/masonry.pkgd.min.js"></script>
+<script src="/resources/js/imagesloaded.pkgd.min.js"></script>
+<script src="/resources/js/classie.js"></script>
+<script src="/resources/js/colorfinder-1.1.js"></script>
+<script src="/resources/js/gridScrollFx.js"></script>
 <script>
     new GridScrollFx( document.getElementById( 'grid' ), {
       minDuration : 0.4,
