@@ -3,7 +3,7 @@
     <script src="/resources/js/jquery.js"></script>
     <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/resources/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="/resources/css/test/demo.css" />
+    <link rel="stylesheet" type="text/css" href="/resources/css/demo.css" />
     <title>VS Project</title>
 </head>
 <body>
