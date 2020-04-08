@@ -25,7 +25,7 @@
   <section class="grid-wrap">
     <ul class="grid swipe-down" id="grid">
       <li class="title-box">
-        <h2>VIDEO<a href="/board/write">UPLOAD</a></h2>
+        <h2><a href="/board/write">UPLOAD</a>YOUR VIDEO</h2>
       </li>
       <c:forEach var="board" items="${boardList}">
             <li><a href="#"><img src="/attach/${board.videoNo}" alt="img01"><h3>${board.title}</h3></a></li>
