@@ -61,10 +61,10 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Projects</a></li>
-            <li><a href="#">Contact</a></li>
+            <li class="active"><a href="/admin-page">Home</a></li>
+            <li><a href="/admin-page/video">Video</a></li>
+            <li><a href="/admin-page/member">Member</a></li>
+            <li><a href="/admin-page/site">Site</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/admin-page/login">Login</a></li>

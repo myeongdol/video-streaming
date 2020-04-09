@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%@ include file = "top.jsp" %>
+<%@ include file = "layout/top.jsp" %>
 
 <div class="col-sm-10 text-left">
     <div class="panel panel-default" style="margin-top: 10%;">
@@ -32,4 +32,4 @@
     </div>
 </div>
 
-<%@ include file = "bottom.jsp" %>
+<%@ include file = "layout/bottom.jsp" %>
