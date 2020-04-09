@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.PostConstruct;
@@ -102,36 +103,34 @@ public class BoardController {
     @PostMapping("/board/add")
     public ModelAndView boardAdd(Board board,
                                  @RequestParam(name = "filename") MultipartFile uploadFile,
-                                 HttpSession session) {
+                                 HttpSession session,
+                                 RedirectAttributes attributes) {
 
-        ModelAndView view = new ModelAndView();
+        String responseMessage = "";
 
         Member memInfo = MemberLogics.getMemberInfo(session);
 
         // 첨부파일 업로드
         Video video = getVideoInfo(uploadFile, new Video());
-        if (video == null) {
-            view.addObject("responseMessage","게시글 등록 실패입니다.");
-        }
         int videoNo = videoService.add(video);
 
         if (videoNo < 1) {
-            view.addObject("responseMessage","첨부파일 업로드 실패입니다.");
-            view.setViewName("board_w");
-            return view;
+            responseMessage = "첨부파일 업로드 실패입니다.";
+            return new ModelAndView("board_w","responseMessage",responseMessage);
         }
 
         int rs = boardService.add(board, videoNo, memInfo.getMemId());
 
         if (rs < 1) {
-            view.addObject("responseMessage","게시글 등록 실패입니다.");
+            responseMessage = "게시글 등록 실패입니다.";
         } else {
-            view.addObject("responseMessage","게시글 등록 성공입니다.");
+            responseMessage = "게시글 등록 성공입니다.";
         }
 
-        view.setViewName("index");
+        RedirectView view = new RedirectView("/");
+        attributes.addFlashAttribute("responseMessage",responseMessage);
 
-        return view;
+        return new ModelAndView(view);
     }
 
     // 첨부파일 처리

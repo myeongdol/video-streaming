@@ -24,11 +24,11 @@
   </header>
   <section class="grid-wrap">
     <ul class="grid swipe-down" id="grid">
-      <li class="title-box">
-        <h2><a href="/board/write">UPLOAD</a>YOUR VIDEO</h2>
-      </li>
-      <c:forEach var="board" items="${boardList}">
-            <li><a href="#"><img src="/attach/${board.videoNo}" alt="img01"><h3>${board.title}</h3></a></li>
+        <li class="title-box">
+            <h2><a href="/board/write">UPLOAD</a>YOUR VIDEO</h2>
+        </li>
+        <c:forEach var="board" items="${boardList}">
+            <li id="li${board.boardNo}"><a id="a${board.boardNo}" onclick="streamIt('${board.boardNo}');"><img src="/attach/${board.videoNo}" alt="img01"><h3>${board.title}</h3></a></li>
         </c:forEach>
     </ul>
   </section>
@@ -56,8 +56,25 @@
     	maxDuration : 0.7,
       viewportFactor : 0.4
     } );
-</script>
 
-<script src="/resources/dist/webpack-test.bundle.js"></script>
+    function streamIt(id) {
+        document.getElementById("a"+id).style.display = "none";
+
+        var video = document.createElement("video");
+        video.setAttribute("id","v"+id);
+        video.setAttribute("width","100%");
+        video.setAttribute("style","margin:7px;");
+        video.autoplay = true;
+        video.controls = true;
+
+        var source = document.createElement("source");
+        source.type = "video/mp4";
+        source.src = "http://zippy.gfycat.com/SpottedDefensiveAbalone.mp4";
+
+        video.appendChild(source);
+
+        document.getElementById("li"+id).appendChild(video);
+    }
+</script>
 
 <%@ include file = "bottom.jsp" %>
