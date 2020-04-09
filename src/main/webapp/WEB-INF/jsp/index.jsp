@@ -69,7 +69,7 @@
 
         var source = document.createElement("source");
         source.type = "video/mp4";
-        source.src = "http://zippy.gfycat.com/SpottedDefensiveAbalone.mp4";
+        source.src = "/play/"+id;
 
         video.appendChild(source);
 

@@ -2,6 +2,7 @@ package com.toy.videostreaming.service;
 
 import com.toy.videostreaming.dao.BoardDao;
 import com.toy.videostreaming.domain.Board;
+import com.toy.videostreaming.domain.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,6 @@ public class BoardService {
     }
 
     public List<Board> listAll() {return boardDao.selectAll();}
+
+    public Board getOne(int no) { return boardDao.selectOneByNo(no); }
 }

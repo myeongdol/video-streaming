@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -30,10 +31,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +79,25 @@ public class BoardController {
         while ( ( length = file.read( buffer ) ) != -1 )
             bout.write( buffer, 0, length );
         return null;
+    }
+
+    @GetMapping("/play/{bno}")
+    public StreamingResponseBody playVideo(@PathVariable int bno) throws FileNotFoundException {
+        Board board = boardService.getOne(bno);
+        Video video = videoService.getOne(board.getVideoNo());
+
+        File file = new File(SAVE_PATH+"video/"+video.getFilePath()+"/"+video.getFileName());
+        InputStream inputStream = new FileInputStream(file);
+
+        return outputStream -> {
+            byte[] data = new byte[2048];
+            int read = 0;
+            while ((read = inputStream.read(data)) > 0) {
+                outputStream.write(data, 0, read);
+            }
+            outputStream.flush();
+        };
+
     }
 
     @GetMapping("/board/write")

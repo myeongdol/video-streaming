@@ -1,10 +1,14 @@
 package com.toy.videostreaming.dao;
 
 import com.toy.videostreaming.domain.Board;
+import com.toy.videostreaming.domain.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,5 +45,23 @@ public class BoardDao {
             board.add(ob);
         }
         return board;
+    }
+
+    public Board selectOneByNo(int no) {
+        return template.queryForObject(
+                "SELECT * FROM board WHERE NO=?",
+                new Object[]{no},
+                new RowMapper<Board>() {
+                    @Override
+                    public Board mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Board board = new Board();
+                        board.setBoardNo(rs.getInt("no"));
+                        board.setVideoNo(rs.getInt("video_no"));
+                        board.setMemId(rs.getString("member_id"));
+                        board.setTitle(rs.getString("title"));
+                        board.setContents(rs.getString("contents"));
+                        return board;
+                    }
+                });
     }
 }
