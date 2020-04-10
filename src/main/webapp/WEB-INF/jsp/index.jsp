@@ -55,11 +55,15 @@
 <script src="/resources/js/layout/colorfinder-1.1.js"></script>
 <script src="/resources/js/layout/gridScrollFx.js"></script>
 <script>
-    new GridScrollFx( document.getElementById( 'grid' ), {
-      minDuration : 0.4,
-    	maxDuration : 0.7,
-      viewportFactor : 0.4
-    } );
+    loading();
+
+    function loading() {
+        new GridScrollFx( document.getElementById( 'grid' ), {
+            minDuration : 0.4,
+            maxDuration : 0.7,
+            viewportFactor : 0.4
+        } );
+    }
 
     function streamIt(id) {
         document.getElementById("a"+id).style.display = "none";
@@ -82,7 +86,17 @@
 
     $(".search-bar input[type=text]").keypress(function(e) {
         if (e.keyCode == 13){
-            alert('검색');
+            var word = $(".search-bar input[type=text]").val();
+            $.ajax({
+                type: "GET",
+                url: "/search",
+                data: {"search":word},
+                success: function(data) {
+                    var result = $(data).find(".grid-wrap").html();
+                    $(".grid-wrap").html(result);
+                    loading();
+                }
+            });
         }
     });
 </script>

@@ -20,5 +20,7 @@ public class BoardService {
 
     public List<Board> listAll() {return boardDao.selectAll();}
 
+    public List<Board> getListByTitle(String word) {return boardDao.selectListByTitle(word);}
+
     public Board getOne(int no) { return boardDao.selectOneByNo(no); }
 }

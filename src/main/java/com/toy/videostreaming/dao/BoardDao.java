@@ -47,6 +47,25 @@ public class BoardDao {
         return board;
     }
 
+    public List<Board> selectListByTitle(String word) {
+        List<Board> board = new ArrayList();
+
+        List<Map<String,Object>> rows = template.queryForList(
+                "SELECT * FROM board WHERE save_status='Y' and title LIKE '%"+word+"%' ORDER BY save_time desc");
+
+        for(Map row : rows) {
+            Board ob = new Board();
+            ob.setBoardNo((Integer)row.get("no"));
+            ob.setVideoNo((Integer)row.get("video_no"));
+            ob.setMemId((String)row.get("member_id"));
+            ob.setTitle((String)row.get("title"));
+            ob.setContents((String)row.get("contents"));
+            ob.setSaveTime(((Timestamp)row.get("save_time")).toLocalDateTime());
+            board.add(ob);
+        }
+        return board;
+    }
+
     public Board selectOneByNo(int no) {
         return template.queryForObject(
                 "SELECT * FROM board WHERE NO=?",
