@@ -86,7 +86,14 @@
 
     $(".search-bar input[type=text]").keypress(function(e) {
         if (e.keyCode == 13){
-            var word = $(".search-bar input[type=text]").val();
+            var word = $(".search-bar input[type=text]").val().trim();
+
+            if(word == "") {
+                alert("검색어를 입력하시기 바랍니다.");
+                $(".search-bar input[type=text]").focus();
+                return false;
+            }
+
             $.ajax({
                 type: "GET",
                 url: "/search",
