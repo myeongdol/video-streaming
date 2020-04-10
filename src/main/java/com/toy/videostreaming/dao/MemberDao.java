@@ -1,5 +1,6 @@
 package com.toy.videostreaming.dao;
 
+import com.toy.videostreaming.code.MemberPermit;
 import com.toy.videostreaming.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -89,8 +90,8 @@ public class MemberDao {
                 });
     }
 
-    public int update(String activeStatus, String memberId) {
-        String SQL = "update member set active_status = ? where id = ?";
-        return template.update(SQL, new Object[]{activeStatus, memberId});
+    public int update(String activeStatus, MemberPermit permit, String memberId) {
+        String SQL = "update member set active_status = ?, permit = ? where id = ?";
+        return template.update(SQL, new Object[]{activeStatus, permit.name(), memberId});
     }
 }

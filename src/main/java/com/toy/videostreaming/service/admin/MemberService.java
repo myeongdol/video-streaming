@@ -1,5 +1,6 @@
 package com.toy.videostreaming.service.admin;
 
+import com.toy.videostreaming.code.MemberPermit;
 import com.toy.videostreaming.dao.MemberDao;
 import com.toy.videostreaming.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class MemberService {
         return dao.selectCount();
     }
 
-    public int update(String activeStatus, String memberId) {
-        return dao.update(activeStatus, memberId);
+    public int update(String activeStatus, MemberPermit permit, String memberId) {
+        return dao.update(activeStatus, permit, memberId);
     }
 
     public Member findOne(String memberId) {

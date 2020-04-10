@@ -1,5 +1,6 @@
 package com.toy.videostreaming.controller.admin;
 
+import com.toy.videostreaming.code.MemberPermit;
 import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.service.admin.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +31,16 @@ public class MemberController {
     public String detail(@PathVariable("memberId") String memberId, Model model) {
         Member member = memberService.findOne(memberId);
         model.addAttribute("member", member);
+        model.addAttribute("permitList", MemberPermit.permitList());
         return "admin/member/detail";
     }
 
     @PostMapping("/edit/{memberId}")
     public String editAction(@PathVariable("memberId") String memberId,
                              @RequestParam("activeStatus") String activeStatus,
+                             @RequestParam("permit") MemberPermit permit,
                              Model model) {
-        int result = memberService.update(activeStatus, memberId);
+        int result = memberService.update(activeStatus, permit, memberId);
 
         Member member = memberService.findOne(memberId);
         model.addAttribute("member", member);

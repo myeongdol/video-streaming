@@ -20,7 +20,9 @@
         <tbody>
           <c:forEach var="member" items="${memberList}">
             <tr>
-              <td>${member.memId}</td>
+              <td>
+                <a href="/admin-page/member/detail/${member.memId}">${member.memId}</a>
+              </td>
               <td>${member.memName}</td>
               <td>${member.memEmail}</td>
               <td>${member.activeStatus}</td>
