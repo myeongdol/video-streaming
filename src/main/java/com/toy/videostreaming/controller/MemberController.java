@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +59,12 @@ public class MemberController {
     }
 
     @PostMapping("/mem/join")
-    public String joinAction(Member member) {
+    public String joinAction(Member member, Model model) {
+        boolean duplicated = memberService.checkDuplicated(member.getMemId());
+        if (duplicated) {
+            model.addAttribute("responseMessage", "아이디 중복입니다.");
+            return "redirect:/join";
+        }
         int result = memberService.addMember(member);
 
         return "hello";

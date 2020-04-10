@@ -19,4 +19,8 @@ public class MemberService {
     public Member getMemberInfo(String id, String pw) {
         return dao.getOneById(id,pw);
     }
+
+    public boolean checkDuplicated(String id) {
+        return dao.selectCountById(id) > 0;
+    }
 }

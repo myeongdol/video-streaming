@@ -37,6 +37,11 @@
           }
           .row.content {height:auto;}
         }
+
+        .info-label {
+          width: 100px;
+          display: inline-block;
+        }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

@@ -20,4 +20,12 @@ public class MemberService {
     public int findCount() {
         return dao.selectCount();
     }
+
+    public int update(String activeStatus, String memberId) {
+        return dao.update(activeStatus, memberId);
+    }
+
+    public Member findOne(String memberId) {
+        return dao.getOneById(memberId);
+    }
 }

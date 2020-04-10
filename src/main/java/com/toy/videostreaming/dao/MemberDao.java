@@ -64,4 +64,33 @@ public class MemberDao {
     public int selectCount() {
         return template.queryForObject("SELECT count(*) FROM member", int.class);
     }
+
+    public int selectCountById(String id) {
+        return template.queryForObject("SELECT count(*) FROM member where id = ?", new Object[]{id}, int.class);
+    }
+
+    public Member getOneById(String id) {
+        return template.queryForObject(
+                "select * from member where id=?",
+                new Object[]{id},
+                new RowMapper<Member>() {
+                    public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+                        Member m = new Member();
+                        m.setMemId(rs.getString("id"));
+                        m.setMemPw(rs.getString("password"));
+                        m.setMemName(rs.getString("name"));
+                        m.setMemEmail(rs.getString("email"));
+                        m.setActiveStatus(rs.getString("active_status"));
+                        Timestamp loginTime = rs.getTimestamp("login_time");
+                        m.setLastLoginTime(loginTime.toLocalDateTime());
+                        m.setMemPermit(rs.getString("permit"));
+                        return m;
+                    }
+                });
+    }
+
+    public int update(String activeStatus, String memberId) {
+        String SQL = "update member set active_status = ? where id = ?";
+        return template.update(SQL, new Object[]{activeStatus, memberId});
+    }
 }
