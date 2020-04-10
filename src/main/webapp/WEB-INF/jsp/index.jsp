@@ -10,13 +10,17 @@
 <div class="container">
   <!-- Top Navigation -->
   <div class="codrops-top clearfix">
+    <div class="search-bar">
+        <input type="text" name="search" placeholder="검색어를 입력하세요">
+        <div class="search"></div>
+    </div>
     <c:if test='${sessionScope.__MEMBER_INFO.memId eq null}' >
-    <span class="right"><a class="codrops-icon codrops-icon-drop" href="/join"><span>회원가입</span></a></span>
-    <span class="right"><a class="codrops-icon codrops-icon-drop" href="/login"><span>로그인</span></a></span>
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/join"><span>회원가입</span></a></span>
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/login"><span>로그인</span></a></span>
     </c:if>
     <c:if test='${sessionScope.__MEMBER_INFO.memId ne null}' >
-    <span class="right"><a class="codrops-icon codrops-icon-drop" href="/logout"><span>로그아웃</span></a></span>
-    <span class="right"><u>${sessionScope.__MEMBER_INFO.memName}</u>님 반갑습니다.</span>
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/logout"><span>로그아웃</span></a></span>
+        <span class="right"><u>${sessionScope.__MEMBER_INFO.memName}</u>님 반갑습니다.</span>
     </c:if>
   </div>
   <header class="codrops-header">
@@ -75,6 +79,12 @@
 
         document.getElementById("li"+id).appendChild(video);
     }
+
+    $(".search-bar input[type=text]").keypress(function(e) {
+        if (e.keyCode == 13){
+            alert('검색');
+        }
+    });
 </script>
 
 <%@ include file = "bottom.jsp" %>
