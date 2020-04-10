@@ -6,30 +6,27 @@
 <div class="col-sm-10 text-left">
     <h1>멤버 목록</h1>
     <hr>
+    <p>${totalCount}개</p>
     <table class="table table-hover">
         <thead>
           <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>ID</th>
+            <th>Name</th>
             <th>Email</th>
+            <th>Active Status</th>
+            <th>Permit</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john@example.com</td>
-          </tr>
-          <tr>
-            <td>Mary</td>
-            <td>Moe</td>
-            <td>mary@example.com</td>
-          </tr>
-          <tr>
-            <td>July</td>
-            <td>Dooley</td>
-            <td>july@example.com</td>
-          </tr>
+          <c:forEach var="member" items="${memberList}">
+            <tr>
+              <td>${member.memId}</td>
+              <td>${member.memName}</td>
+              <td>${member.memEmail}</td>
+              <td>${member.activeStatus}</td>
+              <td>${member.memPermit}</td>
+            </tr>
+          </c:forEach>
         </tbody>
     </table>
     <div class=" text-center">

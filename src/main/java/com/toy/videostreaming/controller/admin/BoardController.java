@@ -1,7 +1,7 @@
 package com.toy.videostreaming.controller.admin;
 
-import com.toy.videostreaming.domain.Member;
-import com.toy.videostreaming.service.admin.MemberService;
+import com.toy.videostreaming.domain.Board;
+import com.toy.videostreaming.service.admin.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@Controller(value = "adminMemberController")
-@RequestMapping("/admin-page/member")
-public class MemberController {
+@Controller(value = "adminBoardController")
+@RequestMapping("/admin-page/board")
+public class BoardController {
 
     @Autowired
-    private MemberService memberService;
+    private BoardService boardService;
 
     @GetMapping
     public String list(Model model) {
-        List<Member> memberList = memberService.findList();
-        int totalCount = memberService.findCount();
+        List<Board> boardList = boardService.listAll();
+        int totalCount = boardService.findCount();
 
-        model.addAttribute("memberList", memberList);
+        model.addAttribute("boardList", boardList);
         model.addAttribute("totalCount", totalCount);
-        return "admin/member/list";
+        return "admin/board/list";
     }
 }

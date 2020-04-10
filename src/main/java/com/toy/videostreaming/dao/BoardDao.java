@@ -64,4 +64,8 @@ public class BoardDao {
                     }
                 });
     }
+
+    public int selectCount() {
+        return template.queryForObject("SELECT count(*) FROM board", int.class);
+    }
 }

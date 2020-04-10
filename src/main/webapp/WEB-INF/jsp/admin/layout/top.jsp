@@ -62,7 +62,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/admin-page">Home</a></li>
-            <li><a href="/admin-page/video">Video</a></li>
+            <li><a href="/admin-page/board">Board</a></li>
             <li><a href="/admin-page/member">Member</a></li>
             <li><a href="/admin-page/site">Site</a></li>
           </ul>

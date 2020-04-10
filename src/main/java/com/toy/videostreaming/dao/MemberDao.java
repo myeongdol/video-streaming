@@ -8,7 +8,11 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class MemberDao {
@@ -36,4 +40,28 @@ public class MemberDao {
                 });
     }
 
+    public List<Member> selectList() {
+        List<Member> members = new ArrayList();
+
+        List<Map<String, Object>> rows = template.queryForList(
+                "SELECT * FROM member ORDER BY id desc");
+
+        for(Map row : rows) {
+            Member m = new Member();
+            m.setMemId((String) row.get("id"));
+            m.setMemPw((String) row.get("password"));
+            m.setMemName((String) row.get("name"));
+            m.setMemEmail((String) row.get("email"));
+            m.setActiveStatus((String) row.get("active_status"));
+            Timestamp loginTime = (Timestamp) row.get("login_time");
+            m.setLastLoginTime(loginTime.toLocalDateTime());
+            m.setMemPermit((String) row.get("permit"));
+            members.add(m);
+        }
+        return members;
+    }
+
+    public int selectCount() {
+        return template.queryForObject("SELECT count(*) FROM member", int.class);
+    }
 }
