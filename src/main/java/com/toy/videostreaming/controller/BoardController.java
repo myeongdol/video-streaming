@@ -62,6 +62,13 @@ public class BoardController {
         return "index";
     }
 
+    @GetMapping("/search")
+    public String search(@RequestParam(name = "search") String word, Model model) {
+        List<Board> boardList = boardService.getListByTitle(word);
+        model.addAttribute("boardList",boardList);
+        return "index";
+    }
+
     @GetMapping("/attach/{vno}")
     public String readFile(@PathVariable int vno, HttpServletResponse response) throws IOException {
         if ( vno <= 0 ) { return null; }

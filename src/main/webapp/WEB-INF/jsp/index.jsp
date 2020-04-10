@@ -10,13 +10,17 @@
 <div class="container">
   <!-- Top Navigation -->
   <div class="codrops-top clearfix">
+    <div class="search-bar">
+        <input type="text" name="search" placeholder="검색어를 입력하세요">
+        <div class="search"></div>
+    </div>
     <c:if test='${sessionScope.__MEMBER_INFO.memId eq null}' >
-    <span class="right"><a class="codrops-icon codrops-icon-drop" href="/join"><span>회원가입</span></a></span>
-    <span class="right"><a class="codrops-icon codrops-icon-drop" href="/login"><span>로그인</span></a></span>
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/join"><span>회원가입</span></a></span>
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/login"><span>로그인</span></a></span>
     </c:if>
     <c:if test='${sessionScope.__MEMBER_INFO.memId ne null}' >
-    <span class="right"><a class="codrops-icon codrops-icon-drop" href="/logout"><span>로그아웃</span></a></span>
-    <span class="right"><u>${sessionScope.__MEMBER_INFO.memName}</u>님 반갑습니다.</span>
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/logout"><span>로그아웃</span></a></span>
+        <span class="right"><u>${sessionScope.__MEMBER_INFO.memName}</u>님 반갑습니다.</span>
     </c:if>
   </div>
   <header class="codrops-header">
@@ -51,11 +55,15 @@
 <script src="/resources/js/layout/colorfinder-1.1.js"></script>
 <script src="/resources/js/layout/gridScrollFx.js"></script>
 <script>
-    new GridScrollFx( document.getElementById( 'grid' ), {
-      minDuration : 0.4,
-    	maxDuration : 0.7,
-      viewportFactor : 0.4
-    } );
+    loading();
+
+    function loading() {
+        new GridScrollFx( document.getElementById( 'grid' ), {
+            minDuration : 0.4,
+            maxDuration : 0.7,
+            viewportFactor : 0.4
+        } );
+    }
 
     function streamIt(id) {
         document.getElementById("a"+id).style.display = "none";
@@ -75,6 +83,29 @@
 
         document.getElementById("li"+id).appendChild(video);
     }
+
+    $(".search-bar input[type=text]").keypress(function(e) {
+        if (e.keyCode == 13){
+            var word = $(".search-bar input[type=text]").val().trim();
+
+            if(word == "") {
+                alert("검색어를 입력하시기 바랍니다.");
+                $(".search-bar input[type=text]").focus();
+                return false;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/search",
+                data: {"search":word},
+                success: function(data) {
+                    var result = $(data).find(".grid-wrap").html();
+                    $(".grid-wrap").html(result);
+                    loading();
+                }
+            });
+        }
+    });
 </script>
 
 <%@ include file = "bottom.jsp" %>
