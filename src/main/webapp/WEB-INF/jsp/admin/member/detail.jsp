@@ -26,8 +26,7 @@
                 <c:forEach var="permit" items="${permitList}">
                     <label class="radio-inline">
                         <input type="radio" name="permit" value="${permit}"
-                            // Todo : eq이 적용이 안되는 문제
-                            <c:if test='${member.memPermit eq "${permit}"}' > checked </c:if>> ${permit.getDesc()}
+                            <c:if test='${member.memPermit == permit}' > checked </c:if>> ${permit.getDesc()}
                     </label>
                 </c:forEach>
             </li>

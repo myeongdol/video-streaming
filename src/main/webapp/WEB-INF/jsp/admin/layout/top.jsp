@@ -1,3 +1,4 @@
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,12 +45,25 @@
         }
     </style>
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
     <script>
         $(function(){
             var responseMessage = "<c:out value="${responseMessage}" />";
             if(responseMessage != ""){
                 alert(responseMessage)
+            }
+
+            var pathName = window.location.pathname;
+            var adminNav = document.querySelector('#adminNav');
+            if (pathName.includes('board')) {
+                document.querySelector('#adminNavBoard').classList.add('active');
+            } else if (pathName.includes('member')) {
+                document.querySelector('#adminNavMember').classList.add('active');
+            } else if (pathName.includes('site')) {
+                document.querySelector('#adminNavSite').classList.add('active');
+            } else {
+                document.querySelector('#adminNavHome').classList.add('active');
             }
         })
     </script>
@@ -62,14 +76,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/admin-page">Admin</a>
+          <a class="navbar-brand" href="/admin-page">Admin Page</a>
         </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="/admin-page">Home</a></li>
-            <li><a href="/admin-page/board">Board</a></li>
-            <li><a href="/admin-page/member">Member</a></li>
-            <li><a href="/admin-page/site">Site</a></li>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav" id="adminNav">
+            <li id="adminNavHome"><a href="/admin-page">Home</a></li>
+            <li id="adminNavBoard"><a href="/admin-page/board">Board</a></li>
+            <li id="adminNavMember"><a href="/admin-page/member">Member</a></li>
+            <li id="adminNavSite"><a href="/admin-page/site">Site</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/admin-page/login">Login</a></li>
