@@ -131,27 +131,13 @@ section {
 }
 
 .related > a {
-	border: 1px solid #2E3444;
-	display: inline-block;
 	text-align: center;
-	margin: 20px 10px;
 	padding: 25px;
-	color: #2E3444;
-}
-
-.related a:hover {
-	border-color: #FF2A48;
 	color: #FF2A48;
 }
 
-.related a img {
-	max-width: 100%;
-	opacity: 0.8;
-}
-
-.related a:hover img,
-.related a:active img {
-	opacity: 1;
+.related a:hover {
+	color: #FF2A48;
 }
 
 .related a h3 {

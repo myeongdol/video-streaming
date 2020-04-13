@@ -37,15 +37,7 @@
     </ul>
   </section>
   <section class="related">
-    <p>If you enjoyed this demo you might also like:</p>
-    <a href="http://tympanus.net/Development/ThumbnailGridAnimations/">
-      <img src="http://tympanus.net/codrops/wp-content/uploads/2013/10/ThumbnailGridAnimations1-300x162.jpg" />
-      <h3>Animations for Thumbnail Grids</h3>
-    </a>
-    <a href="http://tympanus.net/Development/GridLoadingEffects/">
-      <img src="http://tympanus.net/codrops/wp-content/uploads/2013/07/GridLoadingEffects-300x162.png" />
-      <h3>Grid Loading Effects</h3>
-    </a>
+    <p>소스 코드 관리 <a href="https://github.com/myeongdol/video-streaming">github.com/myeongdol/video-streaming</a></p>
   </section>
 </div>
 
