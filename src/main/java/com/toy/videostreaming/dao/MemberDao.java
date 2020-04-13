@@ -2,6 +2,7 @@ package com.toy.videostreaming.dao;
 
 import com.toy.videostreaming.code.MemberPermit;
 import com.toy.videostreaming.domain.Member;
+import com.toy.videostreaming.support.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,9 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class MemberDao {
@@ -42,25 +41,11 @@ public class MemberDao {
                 });
     }
 
-    public List<Member> selectList() {
-        List<Member> members = new ArrayList();
+    public List<Member> selectList(Pager pager) {
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("SELECT * FROM member ORDER BY id desc Limit ?, ?");
 
-        List<Map<String, Object>> rows = template.queryForList(
-                "SELECT * FROM member ORDER BY id desc");
-
-        for(Map row : rows) {
-            Member m = new Member();
-            m.setMemId((String) row.get("id"));
-            m.setMemPw((String) row.get("password"));
-            m.setMemName((String) row.get("name"));
-            m.setMemEmail((String) row.get("email"));
-            m.setActiveStatus((String) row.get("active_status"));
-            Timestamp loginTime = (Timestamp) row.get("login_time");
-            m.setLastLoginTime(loginTime.toLocalDateTime());
-            m.setMemPermit((String) row.get("permit"));
-            members.add(m);
-        }
-        return members;
+        return template.query(queryBuilder.toString(), new Object[]{pager.getStart(), pager.getPagePerCount()}, new MemberMapper());
     }
 
     public int selectCount() {
@@ -94,5 +79,20 @@ public class MemberDao {
     public int update(String activeStatus, MemberPermit permit, String memberId) {
         String SQL = "update member set active_status = ?, permit = ? where id = ?";
         return template.update(SQL, new Object[]{activeStatus, permit.name(), memberId});
+    }
+
+    public class MemberMapper implements RowMapper<Member> {
+        public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Member m = new Member();
+            m.setMemId(rs.getString("id"));
+            m.setMemPw(rs.getString("password"));
+            m.setMemName(rs.getString("name"));
+            m.setMemEmail(rs.getString("email"));
+            m.setActiveStatus(rs.getString("active_status"));
+            Timestamp loginTime = (Timestamp) rs.getTimestamp("login_time");
+            m.setLastLoginTime(loginTime.toLocalDateTime());
+            m.setMemPermit(rs.getString("permit"));
+            return m;
+        }
     }
 }

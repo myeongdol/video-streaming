@@ -3,6 +3,7 @@ package com.toy.videostreaming.service.admin;
 import com.toy.videostreaming.code.MemberPermit;
 import com.toy.videostreaming.dao.MemberDao;
 import com.toy.videostreaming.domain.Member;
+import com.toy.videostreaming.support.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,8 @@ public class MemberService {
     @Autowired
     private MemberDao dao;
 
-    public List<Member> findList() {
-        return dao.selectList();
+    public List<Member> findList(Pager pager) {
+        return dao.selectList(pager);
     }
 
     public int findCount() {
