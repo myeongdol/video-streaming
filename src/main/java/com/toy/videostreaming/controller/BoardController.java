@@ -11,14 +11,13 @@ import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
@@ -67,6 +66,14 @@ public class BoardController {
         List<Board> boardList = boardService.getListByTitle(word);
         model.addAttribute("boardList",boardList);
         return "index";
+    }
+
+    @RequestMapping("/search/naver")
+    public String searchNaver(@RequestParam("query") String query, Model model) throws IOException {
+        Document document = Jsoup.connect("https://tv.naver.com/search/clip?query="+query+"&isTag=false").get();
+        String result = document.select("div.thl_a").html();
+        model.addAttribute("result",result);
+        return "naver_view";
     }
 
     @GetMapping("/attach/{vno}")
