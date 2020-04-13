@@ -13,6 +13,8 @@ import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -69,10 +73,25 @@ public class BoardController {
     }
 
     @RequestMapping("/search/naver")
-    public String searchNaver(@RequestParam("query") String query, Model model) throws IOException {
+    public String searchNaver(@RequestParam("query") String query, Model model)
+            throws IOException {
+
         Document document = Jsoup.connect("https://tv.naver.com/search/clip?query="+query+"&isTag=false").get();
-        String result = document.select("div.thl_a").html();
-        model.addAttribute("result",result);
+        Elements elements = document.select("div.thl_a");
+
+        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String, String>>();
+
+        for(Element el : elements) {
+            HashMap<String, String> tmp = new HashMap<>();
+            tmp.put("link","https://tv.naver.com" + el.select("a.cds_thm[href]").attr("href"));
+            tmp.put("title",el.select("a.cds_thm[title]").attr("title"));
+            tmp.put("img",el.select("img[src]").attr("src"));
+
+            list.add(tmp);
+        }
+
+        model.addAttribute("naverResult",list);
+
         return "naver_view";
     }
 

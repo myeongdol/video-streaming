@@ -116,6 +116,7 @@
                 data: {"query":word},
                 success: function(data) {
                     $(".grid-wrap").html(data);
+                    loading();
                 }
             });
         }
