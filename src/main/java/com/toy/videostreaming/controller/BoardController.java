@@ -57,7 +57,7 @@ public class BoardController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Board> boardList = boardService.listAll();
+        List<Board> boardList = boardService.listAll(null);
         model.addAttribute("boardList",boardList);
         return "index";
     }

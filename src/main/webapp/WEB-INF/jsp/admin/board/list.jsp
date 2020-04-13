@@ -13,7 +13,7 @@
             <th>No.</th>
             <th>Video No</th>
             <th>Title</th>
-            <th>Member Id</th>
+            <th>Writer</th>
           </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
             <tr>
               <td>${board.boardNo}</td>
               <td>${board.videoNo}</td>
-              <td>${board.title}</td>
+              <td><a href="/admin-page/board/detail/${board.boardNo}">${board.title}</a></td>
               <td>${board.memId}</td>
             </tr>
           </c:forEach>

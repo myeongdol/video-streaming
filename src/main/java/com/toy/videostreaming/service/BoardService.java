@@ -18,7 +18,7 @@ public class BoardService {
         return boardDao.insert(board, videoNo, memId);
     }
 
-    public List<Board> listAll() {return boardDao.selectAll();}
+    public List<Board> listAll(String permit) {return boardDao.selectAll(permit);}
 
     public List<Board> getListByTitle(String word) {return boardDao.selectListByTitle(word);}
 

@@ -36,6 +36,7 @@ public class MemberDao {
                         mem.setMemId(rs.getString("id"));
                         mem.setMemName(rs.getString("name"));
                         mem.setMemEmail(rs.getString("email"));
+                        mem.setMemPermit(rs.getString("permit"));
                         return mem;
                     }
                 });

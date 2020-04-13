@@ -13,8 +13,8 @@ public class BoardService {
     @Autowired
     BoardDao boardDao;
 
-    public List<Board> listAll() {
-        return boardDao.selectAll();
+    public List<Board> listAll(String permit) {
+        return boardDao.selectAll(permit);
     }
 
     public Board getOne(int no) {
@@ -24,4 +24,6 @@ public class BoardService {
     public int findCount() {
         return boardDao.selectCount();
     }
+
+    public int updateStatus(int boardNo, String status) { return boardDao.updateStatus(boardNo,status); }
 }

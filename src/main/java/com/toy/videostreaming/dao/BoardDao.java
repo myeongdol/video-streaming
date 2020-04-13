@@ -5,6 +5,7 @@ import com.toy.videostreaming.domain.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -28,11 +29,17 @@ public class BoardDao {
         );
     }
 
-    public List<Board> selectAll() {
+    public List<Board> selectAll(@Nullable String permit) {
         List<Board> board = new ArrayList();
+        String sql = "";
 
-        List<Map<String,Object>> rows = template.queryForList(
-                "SELECT * FROM board WHERE save_status='Y' ORDER BY save_time desc");
+        if(permit == null) {
+            sql = "SELECT * FROM board WHERE save_status='Y' ORDER BY save_time desc";
+        } else {
+            sql = "SELECT * FROM board ORDER BY save_time desc";
+        }
+
+        List<Map<String,Object>> rows = template.queryForList(sql);
 
         for(Map row : rows) {
             Board ob = new Board();
@@ -79,6 +86,8 @@ public class BoardDao {
                         board.setMemId(rs.getString("member_id"));
                         board.setTitle(rs.getString("title"));
                         board.setContents(rs.getString("contents"));
+                        board.setStatus(rs.getString("save_status"));
+                        board.setSaveTime(rs.getTimestamp("save_time").toLocalDateTime());
                         return board;
                     }
                 });
@@ -86,5 +95,12 @@ public class BoardDao {
 
     public int selectCount() {
         return template.queryForObject("SELECT count(*) FROM board", int.class);
+    }
+
+    public int updateStatus(int boardNo, String status) {
+        return template.update(
+                "update board set save_status=? where no=?",
+                status, boardNo
+        );
     }
 }
