@@ -3,6 +3,7 @@ package com.toy.videostreaming.controller.admin;
 import com.toy.videostreaming.code.MemberPermit;
 import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.service.admin.MemberService;
+import com.toy.videostreaming.support.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +19,15 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping
-    public String list(Model model) {
-        List<Member> memberList = memberService.findList();
+    public String list(@RequestParam(value = "p", defaultValue = "0") int p, Model model) {
+        Pager pager = new Pager(p);
+
+        List<Member> memberList = memberService.findList(pager);
         int totalCount = memberService.findCount();
 
         model.addAttribute("memberList", memberList);
         model.addAttribute("totalCount", totalCount);
+        model.addAttribute("pager", pager);
         return "admin/member/list";
     }
 
