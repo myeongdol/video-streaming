@@ -138,6 +138,7 @@ section {
 
 .related a:hover {
 	color: #FF2A48;
+	font-weight: bolder;
 }
 
 .related a h3 {
@@ -188,6 +189,7 @@ section {
     font-weight: bolder;
     letter-spacing: 0.1em;
 }
+
 .search-bar input:hover {
    cursor: pointer;
 }
@@ -196,11 +198,22 @@ section {
       opacity: 1;
       cursor: text;
 }
-.search-bar input:focus ~ .search {
+.search-bar input:focus ~ .search,
+.search-bar .naver_icon:hover ~ .search {
       right: -250px;
       background: #151515;
       z-index: 6;
 }
+.search-bar input:focus ~ .naver_icon,
+.search-bar .naver_icon:hover {
+    content : url("/resources/img/naver.png");
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+    cursor: pointer;
+    margin-right: -40px;
+}
+
 .search-bar input:before {
     top: 0;
     left: 0;
@@ -222,6 +235,25 @@ section {
     font-weight: bolder;
 }
 
+.search-bar .naver_icon {
+    width: 0;
+    height: 0;
+    float: right;
+    opacity: 0;
+}
+.search-bar .naver_icon:before {
+    content : "";
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+.search-bar .naver_icon:after {
+    content : "";
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
 .search-bar .search {
     position: relative;
     top: 0;
@@ -235,7 +267,6 @@ section {
     transition: all 1s;
     z-index: 4;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.4);
-    // box-shadow: 0 0 25px 0 crimson;
 
 }
 .search-bar .search:hover {

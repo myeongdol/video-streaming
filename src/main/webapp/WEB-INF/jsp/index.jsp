@@ -11,7 +11,8 @@
   <!-- Top Navigation -->
   <div class="codrops-top clearfix">
     <div class="search-bar">
-        <input type="text" name="search" placeholder="검색어를 입력하세요">
+        <input class="search-input" type="text" name="search" placeholder="검색어를 입력하세요">
+        <div class="naver_icon" title="네이버에서 검색하기"></div>
         <div class="search"></div>
     </div>
     <c:if test='${sessionScope.__MEMBER_INFO.memId eq null}' >
@@ -30,7 +31,6 @@
     <ul class="grid swipe-down" id="grid">
         <li class="title-box">
             <h2><a href="/board/write">UPLOAD</a>YOUR VIDEO</h2>
-            <input type="text" id="naver-search" name="query" placeholder="네이버 검색 기능 확인용">
         </li>
         <c:forEach var="board" items="${boardList}">
             <li id="li${board.boardNo}"><a id="a${board.boardNo}" onclick="streamIt('${board.boardNo}');"><img src="/attach/${board.videoNo}" alt="img01"><h3>${board.title}</h3></a></li>
@@ -77,15 +77,16 @@
         document.getElementById("li"+id).appendChild(video);
     }
 
+    // 네이버 팝업
+    function popupNaver(url) {
+        var win = window.open(url,"_blank");
+        win.focus();
+    }
+
     $(".search-bar input[type=text]").keypress(function(e) {
         if (e.keyCode == 13){
-            var word = $(".search-bar input[type=text]").val().trim();
-
-            if(word == "") {
-                alert("검색어를 입력하시기 바랍니다.");
-                $(".search-bar input[type=text]").focus();
-                return false;
-            }
+            var word = checkSearchInput();
+            if(word==null) { return false; }
 
             $.ajax({
                 type: "GET",
@@ -100,27 +101,34 @@
         }
     });
 
-    $("#naver-search").keypress(function(e) {
-        if (e.keyCode == 13){
-            var word = $("#naver-search").val().trim();
+    $(".search-bar .naver_icon").click(function(e) {
+        var word = checkSearchInput();
+        if(word==null) { return false; }
 
-            if(word == "") {
-                alert("검색어를 입력하시기 바랍니다.");
-                $("#naver-search").focus();
-                return false;
+        $.ajax({
+            type: "GET",
+            url: "/search/naver",
+            data: {"query":word},
+            success: function(data) {
+                $(".grid-wrap").html(data);
+                loading();
             }
-
-            $.ajax({
-                type: "GET",
-                url: "/search/naver",
-                data: {"query":word},
-                success: function(data) {
-                    $(".grid-wrap").html(data);
-                    loading();
-                }
-            });
-        }
+        });
     });
+
+    function checkSearchInput() {
+        var word = $(".search-bar input[type=text]").val().trim();
+
+        if(word == "") {
+            alert("검색어를 입력하시기 바랍니다.");
+            $(".search-bar input[type=text]").focus();
+            return null;
+        }
+
+        $(".search-bar input[type=text]").val("");
+
+        return word;
+    }
 </script>
 
 <%@ include file = "bottom.jsp" %>
