@@ -1,26 +1,30 @@
 package com.toy.videostreaming.support;
 
 public class Pager {
-    int start;
-    int pagePerCount;
+    private int currentPage;
+    private int pagePerCount;
 
     private final int DEFAULT_PAGE_PER_COUNT = 10;
 
-    public Pager(int start) {
-        this.start = start;
+    public Pager(int currentPage) {
+        this.currentPage = currentPage;
         this.pagePerCount = DEFAULT_PAGE_PER_COUNT;
     }
 
-    public Pager(int start, int pagePerCount) {
-        this.start = start;
+    public Pager(int currentPage, int pagePerCount) {
+        this.currentPage = currentPage;
         this.pagePerCount = pagePerCount;
     }
 
     public int getStart() {
-        if (this.start <= 0) {
+        if (this.currentPage <= 0) {
             return 0;
         }
-        return this.start * this.pagePerCount + 1;
+        return this.currentPage * this.pagePerCount;
+    }
+
+    public int getCurrentPage() {
+        return this.currentPage;
     }
 
     public int getPagePerCount() {

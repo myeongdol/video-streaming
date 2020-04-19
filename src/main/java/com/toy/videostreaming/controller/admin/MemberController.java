@@ -28,6 +28,7 @@ public class MemberController {
         model.addAttribute("memberList", memberList);
         model.addAttribute("totalCount", totalCount);
         model.addAttribute("pager", pager);
+        model.addAttribute("pager", pager);
         return "admin/member/list";
     }
 

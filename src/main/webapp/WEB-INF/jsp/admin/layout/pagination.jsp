@@ -1,9 +1,25 @@
+<%@ page import="com.toy.videostreaming.support.PaginationUtils" %>
+
 <ul class="pagination">
-    <li><a href="#">&lt;</a></li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">&gt;</a></li>
+    <c:choose>
+        <c:when test="${PaginationUtils.hasPrevious(pager.currentPage)}">
+            <li><a href="/admin-page/member?p=${PaginationUtils.previousGroupPage(pager.currentPage)}">&lt;</a></li>
+        </c:when>
+        <c:otherwise>
+            <li class="disabled"><a href="#">&lt;</a></li>
+        </c:otherwise>
+    </c:choose>
+
+    <c:forEach var="item" items="${PaginationUtils.pages(totalCount, pager.pagePerCount, pager.currentPage)}">
+        <li><a href="/admin-page/member?p=${item}">${item + 1}</a></li>
+    </c:forEach>
+
+    <c:choose>
+        <c:when test="${PaginationUtils.hasNext(totalCount, pager.pagePerCount, pager.currentPage)}">
+            <li><a href="/admin-page/member?p=${PaginationUtils.nextGroupPage(pager.currentPage)}">&gt;</a></li>
+        </c:when>
+        <c:otherwise>
+            <li class="disabled"><a href="#">&gt;</a></li>
+        </c:otherwise>
+    </c:choose>
 </ul>
