@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SiteController {
 
     @GetMapping
-    public String list() {
-        return "admin/site/list";
+    public String index() {
+        return "admin/site/index";
     }
 }

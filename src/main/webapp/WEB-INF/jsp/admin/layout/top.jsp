@@ -55,17 +55,35 @@
             }
 
             var pathName = window.location.pathname;
+            setNav(pathName);
+        });
+
+        function setNav(pathName) {
             var adminNav = document.querySelector('#adminNav');
+            var sideNavHtml = '';
+
             if (pathName.includes('board')) {
                 document.querySelector('#adminNavBoard').classList.add('active');
+
+                sideNavHtml += '<p><a href="#">Link</a></p><p><a href="#">Link</a></p><p><a href="#">Link</a></p>';
+                document.querySelector('.sidenav').innerHTML = sideNavHtml;
             } else if (pathName.includes('member')) {
                 document.querySelector('#adminNavMember').classList.add('active');
+
+                sideNavHtml += '<p><a href="#">Link</a></p><p><a href="#">Link</a></p><p><a href="#">Link</a></p>';
+                document.querySelector('.sidenav').innerHTML = sideNavHtml;
             } else if (pathName.includes('site')) {
                 document.querySelector('#adminNavSite').classList.add('active');
+
+                sideNavHtml += '<p><a href="#">Link</a></p><p><a href="#">Link</a></p><p><a href="#">Link</a></p>';
+                document.querySelector('.sidenav').innerHTML = sideNavHtml;
             } else {
                 document.querySelector('#adminNavHome').classList.add('active');
+
+                sideNavHtml += '<p><a href="#">Link</a></p><p><a href="#">Link</a></p><p><a href="#">Link</a></p>';
+                document.querySelector('.sidenav').innerHTML = sideNavHtml;
             }
-        })
+        }
     </script>
 
     <nav class="navbar navbar-inverse">
@@ -95,7 +113,4 @@
     <div class="container-fluid text-center">
       <div class="row content">
         <div class="col-sm-2 sidenav">
-          <p><a href="#">Link</a></p>
-          <p><a href="#">Link</a></p>
-          <p><a href="#">Link</a></p>
         </div>
