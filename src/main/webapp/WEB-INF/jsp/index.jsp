@@ -21,6 +21,9 @@
     </c:if>
     <c:if test='${sessionScope.__MEMBER_INFO.memId ne null}' >
         <span class="right"><a class="codrops-icon codrops-icon-drop" href="/logout"><span>로그아웃</span></a></span>
+        <c:if test="${sessionScope.__MEMBER_INFO.memPermit eq 'A'}">
+        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/admin-page"><span>관리페이지</span></a></span>
+        </c:if>
         <span class="right"><u>${sessionScope.__MEMBER_INFO.memName}</u>님 반갑습니다.</span>
     </c:if>
   </div>

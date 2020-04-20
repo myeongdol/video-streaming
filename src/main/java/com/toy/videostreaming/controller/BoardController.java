@@ -60,12 +60,17 @@ public class BoardController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<Board> boardList = boardService.listAll(null);
+        List<Board> boardList = boardService.listAll(null,null);
         model.addAttribute("boardList",boardList);
         return "index";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/error")
+    public String error() {
+        return "error";
+    }
+
+   @GetMapping("/search")
     public String search(@RequestParam(name = "search") String word, Model model) {
         List<Board> boardList = boardService.getListByTitle(word);
         model.addAttribute("boardList",boardList);
