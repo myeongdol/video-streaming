@@ -21,6 +21,8 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    private final static String PAGE_BASE_URL = "/admin-page/board";
+
     @GetMapping
     public String list(Model model,
                        HttpSession session,
@@ -30,7 +32,7 @@ public class BoardController {
         String permit = memberInfo.getMemPermit();
 
         // 페이지
-        Pager pager = new Pager(p);
+        Pager pager = new Pager(p, PAGE_BASE_URL);
 
         List<Board> boardList = boardService.listAll(permit,pager);
         int totalCount = boardService.findCount();

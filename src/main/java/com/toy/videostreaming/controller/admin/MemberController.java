@@ -18,9 +18,11 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    private final static String PAGE_BASE_URL = "/admin-page/member";
+
     @GetMapping
     public String list(@RequestParam(value = "p", defaultValue = "0") int p, Model model) {
-        Pager pager = new Pager(p);
+        Pager pager = new Pager(p, PAGE_BASE_URL);
 
         List<Member> memberList = memberService.findList(pager);
         int totalCount = memberService.findCount();
