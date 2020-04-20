@@ -1,7 +1,7 @@
 package com.toy.videostreaming.dao;
 
 import com.toy.videostreaming.domain.Board;
-import com.toy.videostreaming.domain.Video;
+import com.toy.videostreaming.support.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -29,17 +29,24 @@ public class BoardDao {
         );
     }
 
-    public List<Board> selectAll(@Nullable String permit) {
+    public List<Board> selectAll(@Nullable String permit,
+                                 @Nullable Pager pager) {
         List<Board> board = new ArrayList();
-        String sql = "";
+        List<Map<String,Object>> rows;
 
+        // index -> 사용자 화면
         if(permit == null) {
-            sql = "SELECT * FROM board WHERE save_status='Y' ORDER BY save_time desc";
-        } else {
-            sql = "SELECT * FROM board ORDER BY save_time desc";
+            rows = template.queryForList(
+                    "SELECT * FROM board WHERE save_status='Y' ORDER BY save_time desc"
+                    );
         }
-
-        List<Map<String,Object>> rows = template.queryForList(sql);
+        // admin-page 하위 관리자 화면
+        else {
+            rows = template.queryForList(
+                    "SELECT * FROM board ORDER BY save_time desc limit ?, ?",
+                    new Object[]{pager.getStart(), pager.getPagePerCount()}
+                    );
+        }
 
         for(Map row : rows) {
             Board ob = new Board();

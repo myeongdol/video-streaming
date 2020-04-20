@@ -3,6 +3,7 @@ package com.toy.videostreaming.service;
 import com.toy.videostreaming.dao.BoardDao;
 import com.toy.videostreaming.domain.Board;
 import com.toy.videostreaming.domain.Video;
+import com.toy.videostreaming.support.Pager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class BoardService {
         return boardDao.insert(board, videoNo, memId);
     }
 
-    public List<Board> listAll(String permit) {return boardDao.selectAll(permit);}
+    public List<Board> listAll(String permit, Pager pager) {return boardDao.selectAll(permit, pager);}
 
     public List<Board> getListByTitle(String word) {return boardDao.selectListByTitle(word);}
 
