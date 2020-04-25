@@ -4,6 +4,7 @@ import com.toy.videostreaming.domain.Board;
 import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.domain.Video;
 import com.toy.videostreaming.service.BoardService;
+import com.toy.videostreaming.service.SiteService;
 import com.toy.videostreaming.service.VideoService;
 import com.toy.videostreaming.support.MemberLogics;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -42,10 +43,13 @@ import java.util.List;
 public class BoardController {
 
     @Autowired
-    BoardService boardService;
+    private BoardService boardService;
 
     @Autowired
-    VideoService videoService;
+    private VideoService videoService;
+
+    @Autowired
+    private SiteService siteService;
 
     @Autowired
     private Environment env;
@@ -61,7 +65,9 @@ public class BoardController {
     @GetMapping("/")
     public String index(Model model) {
         List<Board> boardList = boardService.listAll(null,null);
-        model.addAttribute("boardList",boardList);
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("joinStatus", siteService.findJoinStatus());
+        model.addAttribute("layoutType", siteService.findLayoutType());
         return "index";
     }
 

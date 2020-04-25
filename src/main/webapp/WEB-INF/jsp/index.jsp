@@ -16,7 +16,10 @@
         <div class="search"></div>
     </div>
     <c:if test='${sessionScope.__MEMBER_INFO.memId eq null}' >
-        <span class="right"><a class="codrops-icon codrops-icon-drop" href="/join"><span>회원가입</span></a></span>
+        <c:if test="${joinStatus eq 'Y'}">
+            <span class="right"><a class="codrops-icon codrops-icon-drop" href="/join"><span>회원가입</span></a></span>
+        </c:if>
+        ${joinStatus} / ${layoutType}
         <span class="right"><a class="codrops-icon codrops-icon-drop" href="/login"><span>로그인</span></a></span>
     </c:if>
     <c:if test='${sessionScope.__MEMBER_INFO.memId ne null}' >
@@ -31,7 +34,7 @@
     <h1><a href="/">Video Streaming</a></h1>
   </header>
   <section class="grid-wrap">
-    <ul class="grid swipe-down" id="grid">
+    <ul class="grid ${layoutType}" id="grid">
         <li class="title-box">
             <h2><a href="/board/write">UPLOAD</a>YOUR VIDEO</h2>
         </li>

@@ -2,6 +2,7 @@ package com.toy.videostreaming.controller;
 
 import com.toy.videostreaming.domain.Member;
 import com.toy.videostreaming.service.MemberService;
+import com.toy.videostreaming.service.SiteService;
 import com.toy.videostreaming.support.MemberLogics;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private SiteService siteService;
 
     @RequestMapping("/login")
     public String login() {
@@ -55,6 +59,10 @@ public class MemberController {
 
     @GetMapping("/join")
     public String joinFrom() {
+        String joinStatus = siteService.findJoinStatus();
+        if (StringUtils.equals(joinStatus, "N")) {
+            return "redirect:/";
+        }
         return "join";
     }
 
